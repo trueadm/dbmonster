@@ -70,9 +70,11 @@
     } else {
       cito.vdom.update(rootNode, table);
     }
+    
+    requestAnimationFrame(update);
   }
 
-  setInterval(update, ENV.timeout);
+  requestAnimationFrame(update);
 
 </script>
 
