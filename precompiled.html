@@ -25,43 +25,43 @@
   var rootNode = null;
 
   function queries(query) {
-    return im7({
+    return {
       tag: "td",
-      attrs: im7({
+      attrs: {
         "class": 'Query ' + elapsedClassName(query.elapsed)
-      }),
-      children: im7([
-        im7({
+      },
+      children: [
+        {
           tag: "span",
-          attrs: im7({
+          attrs: {
             "class": "foo"
-          }),
+          },
           children: formatElapsed(query.elapsed)
-        }),
-        im7({
+        },
+        {
           tag: "div",
           attrs: {
             "class": "popover left"
           },
-          children: im7([
-            im7({
+          children: [
+            {
               tag: "div",
-              attrs: im7({
+              attrs: {
                 "class": "popover-content"
-              }),
+              },
               children: query.query
-            }),
-            im7({
+            },
+            {
               tag: "div",
-              attrs: im7({
+              attrs: {
                 "class": "arrow"
-              }),
+              },
               children: null
-            })
-          ])
-        })
-      ])
-    })
+            }
+          ]
+        }
+      ]
+    };
   }
 
   function database(db) {
@@ -90,13 +90,13 @@
           }
         },
       ].concat( db.topFiveQueries.map( queries) )
-    }
+    };
   }
 
   function update() {
     var dbs = getData();
 
-    var table = {
+    var table = im7({
       tag: "table",
       attrs: {
         "class": "table table-striped latest-data"
@@ -105,8 +105,7 @@
         tag: "tbody",
         children: dbs.map( database )
       }
-    }
-    window.table = table;
+    });
 
     if(rootNode === null) {
       rootNode = cito.vdom.append(document.getElementById('body'), table);
