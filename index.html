@@ -54,6 +54,8 @@
     `
   }
 
+  var once = false;
+
   function update() {
     var dbs = getData();
 
@@ -70,13 +72,18 @@
     } else {
       cito.vdom.update(rootNode, table);
     }
-    
-    requestAnimationFrame(update);
+
+    Monitoring.renderRate.ping();
+
+    if(once === false) {
+      requestAnimationFrame(update);
+    }
   }
 
   requestAnimationFrame(update);
 
 </script>
-
+<script src="lib/memory-stats.js"></script>
+<script src="lib/monitor.js"></script>
 </body>
 </html>

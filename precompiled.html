@@ -14,52 +14,54 @@
 <div id="body">
 </div>
 
+<script src="im7.js"></script>
 <script src="t7.js"></script>
 <script src="cito.js"></script>
 <script src="data.js"></script>
-
+<script src="lib/memory-stats.js"></script>
+<script src="lib/monitor.js"></script>
 <script type="text/javascript">
 
   var rootNode = null;
 
   function queries(query) {
-    return {
+    return im7({
       tag: "td",
-      attrs: {
+      attrs: im7({
         "class": 'Query ' + elapsedClassName(query.elapsed)
-      },
-      children: [
-        {
+      }),
+      children: im7([
+        im7({
           tag: "span",
-          attrs: {
+          attrs: im7({
             "class": "foo"
-          },
+          }),
           children: formatElapsed(query.elapsed)
-        },
-        {
+        }),
+        im7({
           tag: "div",
           attrs: {
             "class": "popover left"
           },
-          children: [
-            {
+          children: im7([
+            im7({
               tag: "div",
-              attrs: {
+              attrs: im7({
                 "class": "popover-content"
-              },
+              }),
               children: query.query
-            },
-            {
+            }),
+            im7({
               tag: "div",
-              attrs: {
+              attrs: im7({
                 "class": "arrow"
-              },
+              }),
               children: null
-            }
-          ]
-        }
-      ]
-    }
+            })
+          ])
+        })
+      ])
+    })
   }
 
   function database(db) {
@@ -104,6 +106,7 @@
         children: dbs.map( database )
       }
     }
+    window.table = table;
 
     if(rootNode === null) {
       rootNode = cito.vdom.append(document.getElementById('body'), table);
@@ -111,12 +114,13 @@
       cito.vdom.update(rootNode, table);
     }
 
+    Monitoring.renderRate.ping();
+
     requestAnimationFrame(update);
   }
 
   requestAnimationFrame(update);
 
 </script>
-
 </body>
 </html>
